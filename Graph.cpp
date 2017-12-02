@@ -30,8 +30,8 @@ public:
 	void addLabel(const T& label);
 	void addEdgeAfterCheck(const T& label1, const T& label2, const double& cost);
 	void addEdgeFast(const T& label1, const T& label2, const double& cost);
-	bool edgeExists(const T& label1,const  T& label2) ;
-	double determineCost(const unsigned int& node1, const unsigned int& node2);
+	bool edgeExists(const T& label1,const  T& label2) const;
+	double determineCost(const unsigned int& node1, const unsigned int& node2) const;
 	stack<unsigned int> returnShortestPath(const unsigned int& node1, const unsigned int& node2);
 	~MGraph() {};
 };
@@ -64,13 +64,13 @@ template <class T> void MGraph<T>::addEdgeFast(const T& label1, const T& label2,
 	v_m[x][y] = cost;
 }
 
-template <class T> double MGraph<T>::determineCost(const unsigned int& node1, const unsigned int& node2)  {
+template <class T> double MGraph<T>::determineCost(const unsigned int& node1, const unsigned int& node2) const {
 
 	if (node1 == node2) return 0.0;
 
 	T label1 = numToLabel(node1);
 	T label2 = numToLabel(node2);
-	if (edgeExists(label1, label2)) return v_m[node1][node2];
+	if (edgeExists(label1, label2)) return v_m[node1].at(node2);
 	else {
 		cout << "The edge does not exist";
 		return NULL;
@@ -138,11 +138,12 @@ template <class T> stack<unsigned int> MGraph<T>::returnShortestPath(const unsig
 	return sP;
 }
 
-template <class T> bool MGraph<T>::edgeExists( const T& label1,const  T& label2) {
+template <class T> bool MGraph<T>::edgeExists( const T& label1,const  T& label2) const {
 
  	unsigned int x = labelToNum(label1);
 	unsigned int y = labelToNum(label2);
-	if (v_m[x][y]) return true;
+	auto xxxx = v_m[x].at(y);
+	if (v_m[x].at(y)) return true;
 	return false;
 }
 
@@ -166,7 +167,7 @@ int main() {
 	typedef string typeSpecified;
 
 	MGraph<typeSpecified> g1;
-	readGraph(fileName, g1);	
+	readGraph(fileName, g1);
 	
 	typeSpecified label1;
 	typeSpecified label2;
