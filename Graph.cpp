@@ -32,7 +32,7 @@ public:
 	void addEdgeFast(const T& label1, const T& label2, const double& cost);
 	bool edgeExists(const T& label1,const  T& label2) const;
 	double determineCost(const unsigned int& node1, const unsigned int& node2) const;
-	stack<unsigned int> returnShortestPath(const unsigned int& node1, const unsigned int& node2);
+	stack<unsigned int> returnShortestPath(const unsigned int& node1, const unsigned int& node2) const;
 	~MGraph() {};
 };
 
@@ -77,7 +77,7 @@ template <class T> double MGraph<T>::determineCost(const unsigned int& node1, co
 	}
 }
 
-template <class T> stack<unsigned int> MGraph<T>::returnShortestPath(const unsigned int& node1, const unsigned int& node2) {
+template <class T> stack<unsigned int> MGraph<T>::returnShortestPath(const unsigned int& node1, const unsigned int& node2) const{
 
 	stack<unsigned int> sP;
 	unsigned int vsize = v.size();
@@ -117,7 +117,7 @@ template <class T> stack<unsigned int> MGraph<T>::returnShortestPath(const unsig
 		for (auto iter_map = v_m[minValue.first].begin(); iter_map != v_m[minValue.first].end(); iter_map++) {
 			// do not iterate over the node if it has been deleted
 			if (distance2.find(iter_map->first) == distance2.end()) {
-				double dis = d + v_m[minValue.first][iter_map->first];
+				double dis = d + v_m[minValue.first].at(iter_map->first);
 				if (dis < distance[iter_map->first]) {
 					distance[iter_map->first] = dis;
 					previous[iter_map->first] = minValue.first;
@@ -141,8 +141,7 @@ template <class T> bool MGraph<T>::edgeExists( const T& label1,const  T& label2)
 
  	unsigned int x = labelToNum(label1);
 	unsigned int y = labelToNum(label2);
-	if (v_m[x].at(y)) return true;
-	return false;
+	return (v_m[x].find(y) != v_m[x].end());
 }
 
 template <typename T>
@@ -166,7 +165,6 @@ int main() {
 
 	MGraph<typeSpecified> g1;
 	readGraph(fileName, g1);
-	
 	typeSpecified label1;
 	typeSpecified label2;
 	cout << "Enter the 1st node label \n";
