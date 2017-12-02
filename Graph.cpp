@@ -142,7 +142,6 @@ template <class T> bool MGraph<T>::edgeExists( const T& label1,const  T& label2)
 
  	unsigned int x = labelToNum(label1);
 	unsigned int y = labelToNum(label2);
-	auto xxxx = v_m[x].at(y);
 	if (v_m[x].at(y)) return true;
 	return false;
 }
