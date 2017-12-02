@@ -94,7 +94,7 @@ template <class T> stack<unsigned int> MGraph<T>::returnShortestPath(const unsig
 
 	unsigned int target = node2;
 	map<unsigned int, double> distance;
-	map<unsigned int, double> distance2;
+	map<unsigned int, double> deletedDist;
 	map<unsigned int, unsigned int> previous;
 
 	for (int it = 0; it < vsize; it++) distance[it] = INFINITY;
@@ -110,13 +110,13 @@ template <class T> stack<unsigned int> MGraph<T>::returnShortestPath(const unsig
 		}
 
 		double d = minValue.second;
-		distance2.insert(minValue);
+		deletedDist.insert(minValue);
 		distance.erase(minValue.first);
 		if (minValue.first == node2) break;
 
 		for (auto iter_map = v_m[minValue.first].begin(); iter_map != v_m[minValue.first].end(); iter_map++) {
 			// do not iterate over the node if it has been deleted
-			if (distance2.find(iter_map->first) == distance2.end()) {
+			if (deletedDist.find(iter_map->first) == deletedDist.end()) {
 				double dis = d + v_m[minValue.first].at(iter_map->first);
 				if (dis < distance[iter_map->first]) {
 					distance[iter_map->first] = dis;
