@@ -96,9 +96,8 @@ template <class T> stack<unsigned int> MGraph<T>::returnShortestPath(const unsig
 	map<unsigned int, double> distance;
 	map<unsigned int, double> distance2;
 	map<unsigned int, unsigned int> previous;
-	map<T,unsigned int>::const_iterator it;
 
-	for (it = m.begin(); it != m.end(); it++) distance[it->second] = INFINITY;
+	for (int it = 0; it < vsize; it++) distance[it] = INFINITY;
 	distance[node1] = 0;
 
 	while (!distance.empty()) {
