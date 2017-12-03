@@ -1,4 +1,3 @@
-// Graph_work_2.cpp : Defines the entry point for the console application.
 
 #include "stdafx.h"
 #include <iostream>
@@ -16,7 +15,7 @@ using namespace std;
 //The graph class
 template <class T>
 class MGraph {
-	
+
 	vector<map<unsigned int, double>> v_m;
 	vector<T> v;
 	map<T, unsigned int> m;
@@ -25,12 +24,12 @@ public:
 	MGraph() {};
 
 	//This function returns the number of nodes in the graph
-	inline unsigned int numberOfNodes() { return v.size(); }
+	inline unsigned int numberOfNodes() const { return v.size(); }
 	// This function tells whether a provided label occurs or not
 	inline bool labelOccurs(const T& label) const { return m.find(label) != m.end(); }
-	//This function returns a label name for a input label number
+	//This function returns a label  for a input label number
 	inline T numToLabel(const unsigned int& num) const { return v[num]; }
-	//This function returns the label number for the input label name
+	//This function returns the label number for the input label 
 	inline unsigned int labelToNum(const T& label) const { return m.at(label); }
 	//This function compares the "value" of 2 given pairs. 
 	inline static bool comparePair(pair<unsigned int, double> i, pair<unsigned int, double> j) { return i.second < j.second; }
@@ -41,7 +40,7 @@ public:
 	//This function adds an edge to the graph
 	void addEdgeFast(const T& label1, const T& label2, const double& cost);
 	//This function checks whether an edge exists between 2 labels or not
-	bool edgeExists(const T& label1,const  T& label2) const;
+	bool edgeExists(const T& label1, const  T& label2) const;
 	//This function determines the cost of an edge after checking whether the edge exists or not
 	double determineCost(const unsigned int& node1, const unsigned int& node2) const;
 	// This function returns the shortest path using the Dijkstra's algorithm
@@ -54,7 +53,7 @@ template <class T> void MGraph<T>::addLabel(const T& label) {
 	if (!labelOccurs(label)) {
 		m[label] = v.size();
 		v.push_back(label);
-		v_m.push_back(map<unsigned int,double>());
+		v_m.push_back(map<unsigned int, double>());
 	}
 }
 
@@ -95,8 +94,8 @@ template <class T> double MGraph<T>::determineCost(const unsigned int& node1, co
 }
 
 // This function returns the shortest path using the Dijkstra's algorithm
-template <class T> stack<unsigned int> MGraph<T>::returnShortestPath(const unsigned int& node1, const unsigned int& node2) const{
-	
+template <class T> stack<unsigned int> MGraph<T>::returnShortestPath(const unsigned int& node1, const unsigned int& node2) const {
+
 	//The return type of the function is a stack
 	stack<unsigned int> sP;
 	unsigned int vsize = v.size();
@@ -128,15 +127,15 @@ template <class T> stack<unsigned int> MGraph<T>::returnShortestPath(const unsig
 
 	//Distance from nodel1 to node1 (source->source)	
 	distance[node1] = 0;
-	
+
 	while (!distance.empty()) {
 
 		//Finding the node which has the minimun distance from the source
-		pair<unsigned int,double> minValue = *min_element(distance.begin(), distance.end(), &MGraph<T>::comparePair);
+		pair<unsigned int, double> minValue = *min_element(distance.begin(), distance.end(), &MGraph<T>::comparePair);
 
 
 		if (minValue.second == INFINITY) {
-			
+
 			cout << "No path exists \n";
 			return sP;
 		}
@@ -176,9 +175,9 @@ template <class T> stack<unsigned int> MGraph<T>::returnShortestPath(const unsig
 }
 
 //This function checks whether an edge exists between 2 labels or not
-template <class T> bool MGraph<T>::edgeExists( const T& label1,const  T& label2) const {
+template <class T> bool MGraph<T>::edgeExists(const T& label1, const  T& label2) const {
 
- 	unsigned int x = labelToNum(label1);
+	unsigned int x = labelToNum(label1);
 	unsigned int y = labelToNum(label2);
 	return (v_m[x].find(y) != v_m[x].end());
 }
@@ -193,7 +192,7 @@ void readGraph(const string& s, MGraph<T>& g1) {
 
 		T label1, label2;
 		double cost;
-		while (file >> label1 >> label2 >> cost) g1.addEdgeFast(label1, label2, cost);	
+		while (file >> label1 >> label2 >> cost) g1.addEdgeFast(label1, label2, cost);
 	}
 	file.close();
 }
@@ -217,22 +216,22 @@ int main() {
 	cin >> label1;
 	cout << "Enter the 2nd node label \n";
 	cin >> label2;
-	
+
 	//If those labels exist
 	if (g1.labelOccurs(label1) && g1.labelOccurs(label2)) {
-	
+
 		double sum = 0.0;
 		unsigned int node1 = g1.labelToNum(label1);
 		unsigned int node2 = g1.labelToNum(label2);
-	
+
 		stack<unsigned int> ss = g1.returnShortestPath(node1, node2);
 		typeSpecified previosLabel = label1;
 		typeSpecified nextLabel;
-		
+
 		//Display the path on the screen along with the sum
-		if(!ss.empty()) cout << "The path is: \n";
+		if (!ss.empty()) cout << "The path is: \n";
 		while (!ss.empty()) {
-	
+
 			nextLabel = g1.numToLabel(ss.top());
 			sum += g1.determineCost(g1.labelToNum(previosLabel), g1.labelToNum(nextLabel));
 			cout << sum << " " << nextLabel << "\n";
@@ -240,9 +239,9 @@ int main() {
 			previosLabel = nextLabel;
 		}
 	}
-	else cout << "One of the two labels does not exist \n";
+	else cout << "One of the two labels does not exist OR you have not loaded the file correctly \n";
 	return 0;
 }
-	
-	
-	
+
+
+
