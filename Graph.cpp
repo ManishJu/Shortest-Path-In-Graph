@@ -1,6 +1,5 @@
 // Graph_work_2.cpp : Defines the entry point for the console application.
 
-
 #include "stdafx.h"
 #include <iostream>
 #include <vector>
@@ -102,7 +101,7 @@ template <class T> stack<unsigned int> MGraph<T>::returnShortestPath(const unsig
 
 	while (!distance.empty()) {
 
-		auto minValue = *min_element(distance.begin(), distance.end(), &MGraph<T>::comparePair);
+		pair<unsigned int,double> minValue = *min_element(distance.begin(), distance.end(), &MGraph<T>::comparePair);
 		if (minValue.second == INFINITY) {
 			
 			cout << "No path exists \n";
