@@ -13,6 +13,7 @@
 
 using namespace std;
 
+//The graph class
 template <class T>
 class MGraph {
 	
@@ -22,16 +23,28 @@ class MGraph {
 
 public:
 	MGraph() {};
+
+	//This function returns the number of nodes in the graph
 	inline unsigned int numberOfNodes() { return v.size(); }
+	// This function tells whether a provided label occurs or not
 	inline bool labelOccurs(const T& label) const { return m.find(label) != m.end(); }
+	//This function returns a label name for a input label number
 	inline T numToLabel(const unsigned int& num) const { return v[num]; }
+	//This function returns the label number for the input label name
 	inline unsigned int labelToNum(const T& label) const { return m.at(label); }
+	//This function compares the "value" of 2 given pairs. 
 	inline static bool comparePair(pair<unsigned int, double> i, pair<unsigned int, double> j) { return i.second < j.second; }
+	//This function adds a label to the graph
 	void addLabel(const T& label);
+	//This function adds a edge to the graph after checking whether the occurence of atleast 1 label in the graph
 	void addEdgeAfterCheck(const T& label1, const T& label2, const double& cost);
+	//This function adds an edge to the graph
 	void addEdgeFast(const T& label1, const T& label2, const double& cost);
+	//This function checks whether an edge exists between 2 labels or not
 	bool edgeExists(const T& label1,const  T& label2) const;
+	//This function determines the cost of an edge after checking whether the edge exists or not
 	double determineCost(const unsigned int& node1, const unsigned int& node2) const;
+	// This function returns the shortest path using the Dijkstra's algorithm
 	stack<unsigned int> returnShortestPath(const unsigned int& node1, const unsigned int& node2) const;
 	~MGraph() {};
 };
