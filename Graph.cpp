@@ -22,6 +22,7 @@ class MGraph {
 
 public:
 	MGraph() {};
+	inline unsigned int numberOfNodes() { return v.size(); }
 	inline bool labelOccurs(const T& label) const { return m.find(label) != m.end(); }
 	inline T numToLabel(const unsigned int& num) const { return v[num]; }
 	inline unsigned int labelToNum(const T& label) const { return m.at(label); }
@@ -194,6 +195,7 @@ int main() {
 
 	MGraph<typeSpecified> g1;
 	readGraph(fileName, g1);
+
 	typeSpecified label1;
 	typeSpecified label2;
 
